@@ -11,10 +11,19 @@ https://create.arduino.cc/projecthub/me_zain/mini-arduino-cnc-7e4e30
 http://www.instructables.com/id/How-to-Make-Arduino-Based-Mini-CNC-Plotter-Using-D/
 
 
-PictoPlot/
-		bin contains the any binary files
-		firmware: Used with the arduno to drive the plotter
-		img: images used with the pygame interface
-		inkscape: contins components for the converting of svg to gcode
-		pictoplot: contains the libary for transmitting and interface
-		test: contains test images and gcode
+|Folder|Description|
+|bin | contains the any binary files|
+|firmware | Used with the arduno to drive the plotter|
+|img | images used with the pygame interface|
+|inkscape | contins components for the converting of svg to gcode|
+|pictoplot | contains the libary for transmitting and interface|
+|test | contains test images and gcode|
+		
+		| Plugin | README |
+| ------ | ------ |
+| Dropbox | [plugins/dropbox/README.md] [PlDb] |
+| Github | [plugins/github/README.md] [PlGh] |
+| Google Drive | [plugins/googledrive/README.md] [PlGd] |
+| OneDrive | [plugins/onedrive/README.md] [PlOd] |
+| Medium | [plugins/medium/README.md] [PlMe] |
+| Google Analytics | [plugins/googleanalytics/README.md] [PlGa] |
