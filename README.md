@@ -6,12 +6,13 @@ It takes away the manual steps of having to edit the picture in inkscape and exp
 For the hardware project see below.
 
 Hardware Project:
-https://techcrunch.com/2016/11/30/making-an-arduino-based-cnc-plotter-out-of-a-dvd-player-is-as-easy-as-1-2-whats-arduino-again/
-https://create.arduino.cc/projecthub/me_zain/mini-arduino-cnc-7e4e30
-http://www.instructables.com/id/How-to-Make-Arduino-Based-Mini-CNC-Plotter-Using-D/
+[https://techcrunch.com/2016/11/30/making-an-arduino-based-cnc-plotter-out-of-a-dvd-player-is-as-easy-as-1-2-whats-arduino-again/]
+[https://create.arduino.cc/projecthub/me_zain/mini-arduino-cnc-7e4e30]
+[http://www.instructables.com/id/How-to-Make-Arduino-Based-Mini-CNC-Plotter-Using-D/]
 
 
 |Folder|Description|
+| ------ | ------ |
 |bin | contains the any binary files|
 |firmware | Used with the arduno to drive the plotter|
 |img | images used with the pygame interface|
@@ -19,11 +20,5 @@ http://www.instructables.com/id/How-to-Make-Arduino-Based-Mini-CNC-Plotter-Using
 |pictoplot | contains the libary for transmitting and interface|
 |test | contains test images and gcode|
 		
-		| Plugin | README |
-| ------ | ------ |
-| Dropbox | [plugins/dropbox/README.md] [PlDb] |
-| Github | [plugins/github/README.md] [PlGh] |
-| Google Drive | [plugins/googledrive/README.md] [PlGd] |
-| OneDrive | [plugins/onedrive/README.md] [PlOd] |
-| Medium | [plugins/medium/README.md] [PlMe] |
-| Google Analytics | [plugins/googleanalytics/README.md] [PlGa] |
+
+
