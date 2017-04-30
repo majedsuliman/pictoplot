@@ -22,6 +22,8 @@ from subprocess import call
 from inkscape import unicornlib
 import fileinput
 import platform
+import os
+import time
 from transmit import Transmitter
 if platform.system()=="Windows":
         from cv2 import *
@@ -84,13 +86,24 @@ class PicToPlot():
          if s:    # frame captured without any errors
             imwrite("tmp/photo.bmp",img) #save image
       else:
-         pygame.camera.init()#Init pygame
-         cam = pygame.camera.Camera(pygame.camera.list_cameras()[0])#Select the camera
-         cam.start()#start the camera
+         #pygame.camera.init()#Init pygame
+         #cam = pygame.camera.Camera(pygame.camera.list_cameras()[0])#Select the camera
+         #cam.start()#start the camera
+         #print("Linux")
+         #img = cam.get_image()#Geat our image
+         #pygame.image.save(img, "tmp/photo.bmp")#same to the tmp folder
+         #pygame.camera.quit()#tidy up
 
-         img = cam.get_image()#Geat our image
-         pygame.image.save(img, "tmp/photo.bmp")#same to the tmp folder
-         pygame.camera.quit()#tidy up
+
+         #try:
+         #   os.remove('tmp/photo.bmp')
+         #except OSError:
+        #    pass
+         call(['streamer','-c','/dev/video0','-b','16','-s 800x600','-o','tmp/photo.jpeg'])
+         call(['mogrify','-format','bmp','tmp/photo.jpeg'])
+
+
+
       
    
    '''
@@ -129,8 +142,6 @@ class PicToPlot():
       f =fileinput.FileInput("tmp/photo.svg", inplace=True)
       for line in f:#loop through the lines
          if line.startswith("<g transform="):#find the transform line
-            #print('<g transform="translate(80.871973,80.8603) scale(0.02036438,-0.02036362)"')#write the off set
-            #print('<g transform="translate(60.082978,40.809088) scale(0.0110258,-0.011025)"')#write the off set
             scale=0.0105000
             print('<g transform="translate(60.082978,20.809088) scale('+str(scale)+',-'+str(scale)+')"')#write the off set
          else:    

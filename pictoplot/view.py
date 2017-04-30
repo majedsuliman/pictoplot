@@ -52,4 +52,5 @@ class ViewGCode():
                penup()
       exitonclick()
       done()
+      exit()
       

@@ -21,6 +21,7 @@ import pictoplot.interface
 import pictoplot.view
 import sys
 from shutil import copyfile
+import platform
 
 '''
 This is the main interface to eather run as headless or with an interface
@@ -45,9 +46,12 @@ def main(argv):
         elif opt in ("-m"):
             i = int(arg)
            
-    #Our main code to run the program        
-    p=pictoplot.lib.PicToPlot(port="COM3",board=57600,threshold=0.5)
-    
+    #Our main code to run the program
+    if platform.system()=="Windows":
+        p=pictoplot.lib.PicToPlot(port="COM3",board=57600,threshold=0.5)
+    else:
+        p=pictoplot.lib.PicToPlot(port="/dev/ttyUSB0",board=57600,threshold=0.5)
+        
     if i==1:
         #Interface mode
         i=pictoplot.interface.Interface(p)
