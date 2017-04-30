@@ -33,44 +33,38 @@ import sys, getopt
 def main(argv):
     i = 0
     try:
-        opts, args = getopt.getopt(argv,"hi:",["interactive="])
+        opts, args = getopt.getopt(argv,"hm:",["interactive="])
     except getopt.GetoptError:
-        print 'pictoplot.py -i <interactive>'
+        print 'pictoplot.py -m <mode>'
         sys.exit(2)
 
     for opt, arg in opts:
         if opt == '-h':
-            print 'pictoplot.py -i <interactive [1,0]>'
+            print 'pictoplot.py -m <mode>'
             sys.exit()
-        elif opt in ("-i"):
+        elif opt in ("-m"):
             i = int(arg)
            
     #Our main code to run the program        
     p=pictoplot.lib.PicToPlot(port="COM3",board=57600,threshold=0.5)
     
     if i==1:
+        #Interface mode
         i=pictoplot.interface.Interface(p)
         i.Process()
     elif i==2:
-        #copy the test photo
-        copyfile('test/photo.bmp', 'tmp/photo.bmp')
-        p.Process(['convtobmp','convtosvg','fixsvg','convtog','trans'])
-    elif i==3:
-        #copy the test photo
-        copyfile('test/photo.gcode', 'tmp/photo.gcode')
-        p.Process(['trans'])
-    elif i==4:
-        #copy the test photo
-        copyfile('test/photo.bmp', 'tmp/photo.bmp')
-        p.Process(['convtobmp','convtosvg','fixsvg','convtog'])
-    elif i==5:
-        #render output to screen
+        #render output to screen without plotting
         p.Process(['takepic','convtobmp','convtosvg','fixsvg','convtog'])
         v=pictoplot.view.ViewGCode()
-        v.Render('tmp/photo.gcode',scale=8,drawbox=True)
-    elif i==6:
-        #Send Home
-        p.Home()
+        v.Render('tmp/photo.gcode',scale=8,drawbox=True) 
+    elif i==3:
+        #Print test photo
+        copyfile('test/photo.bmp', 'tmp/photo.bmp')
+        p.Process(['convtobmp','convtosvg','fixsvg','convtog','trans'])
+    elif i==4:
+        #print test gcode
+        copyfile('test/photo.gcode', 'tmp/photo.gcode')
+        p.Process(['trans'])
     else:
         p.Process(['takepic','convtobmp','convtosvg','fixsvg','convtog','trans'])
 
