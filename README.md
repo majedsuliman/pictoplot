@@ -15,6 +15,13 @@ This project performs the following steps to achieve this.
 
 I have also added other features to make it useful such as GCode preview and a interface so you can see the picture.
 
+### install
+#### windows
+#### Ubuntu
+  python3
+  pygame
+  sudo apt-get install python-tk
+
 For the hardware project see below.
 ### Hardware Project:
 
@@ -32,8 +39,8 @@ For the hardware project see below.
 |pictoplot | contains the libary for transmitting and interface|
 |test | contains test images and gcode|
 
-###Usage
-####Headless Mode
+### Usage
+#### Headless Mode
 Run as headless mode,this will perform all steps
 ['takepic','convtobmp','convtosvg','fixsvg','convtog','trans'].
 
@@ -45,27 +52,27 @@ or
 python pictoplot.py -m 0 
 ```
 
-####Interface Mode
+#### Interface Mode
 Use the interface this requres pygame to be installed
 ```
 python pictoplot.py -m 1
 ```
 
-####Render GCode to diplay without plotting mode
-Print the test gcode this 
+#### Render GCode to diplay without plotting mode
+Render the GCode to screen this does not send to cnc plotter and is useful for testing without waiting for plotting and wasting ink and paper.
 ```
 python pictoplot.py -m 2
 ```
 
-####Print test image mode
+#### Print test image mode
 Print the test image this prints a grid image located under test\photo.bmp
 ```
 python pictoplot.py -m 3
 ```
 
 
-####Render GCode Mode
-This will render the GCode result to screen
+#### Print a test GCode Mode
+This will print a gcode and will print a box 40mmx40mm the bound of the plotter
 ```
 python pictoplot.py -m 4
 ```
