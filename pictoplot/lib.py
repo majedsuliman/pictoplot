@@ -130,7 +130,9 @@ class PicToPlot():
       for line in f:#loop through the lines
          if line.startswith("<g transform="):#find the transform line
             #print('<g transform="translate(80.871973,80.8603) scale(0.02036438,-0.02036362)"')#write the off set
-            print('<g transform="translate(60.082978,40.809088) scale(0.0110258,-0.011025)"')#write the off set
+            #print('<g transform="translate(60.082978,40.809088) scale(0.0110258,-0.011025)"')#write the off set
+            scale=0.0105000
+            print('<g transform="translate(60.082978,20.809088) scale('+str(scale)+',-'+str(scale)+')"')#write the off set
          else:    
             print(line.replace('pt"', '"'))#remove the pt
       f.close()#Tidy up

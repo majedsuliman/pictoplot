@@ -1,8 +1,8 @@
 # pictoplot
 DVD CNC Software 0.5 Beta
 
-PictoPlot enables a streamlined plotting of pictures, it is used in conjuction with the DVD CNC machine project below.
-It takes away the manual steps of having to edit the picture in inkscape and export as gcode.
+PictoPlot enables a streamlined plotting of pictures, it is used in conjunction with the DVD CNC machine project below.
+It takes away the manual steps of having to edit the picture in Inkscape and export as gcode.
 For the hardware project see below.
 
 Hardware Project:

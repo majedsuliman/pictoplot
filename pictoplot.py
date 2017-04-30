@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
 import pictoplot.lib
 import pictoplot.interface
+import pictoplot.view
 import sys
 from shutil import copyfile
 
@@ -63,6 +64,11 @@ def main(argv):
         copyfile('test/photo.bmp', 'tmp/photo.bmp')
         p.Process(['convtobmp','convtosvg','fixsvg','convtog'])
     elif i==5:
+        #render output to screen
+        p.Process(['takepic','convtobmp','convtosvg','fixsvg','convtog'])
+        v=pictoplot.view.ViewGCode()
+        v.Render('tmp/photo.gcode',scale=8,drawbox=True)
+    elif i==6:
         #Send Home
         p.Home()
     else:
