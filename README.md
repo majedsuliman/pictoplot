@@ -33,7 +33,7 @@ For the hardware project see below.
 |test | contains test images and gcode|
 
 ### Usage
-####Headless Mode
+#### Headless Mode
 Run as headless mode,this will perform all steps
 ['takepic','convtobmp','convtosvg','fixsvg','convtog','trans'].
 
