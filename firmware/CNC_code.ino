@@ -83,7 +83,7 @@ boolean verbose = false;
 void setup() {
   //  Setup
   
-  Serial.begin( 9600 );
+  Serial.begin( 57600 );//made this a bit faster
   
   penServo.attach(penServoPin);
   penServo.write(penZUp);
