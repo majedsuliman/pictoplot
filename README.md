@@ -15,6 +15,13 @@ This project performs the following steps to achieve this.
 
 I have also added other features to make it useful such as GCode preview and a interface so you can see the picture.
 
+### install
+#### windows
+#### Ubuntu
+  python3
+  pygame
+  sudo apt-get install python-tk
+
 For the hardware project see below.
 ### Hardware Project:
 
