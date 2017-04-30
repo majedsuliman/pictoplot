@@ -32,7 +32,7 @@ For the hardware project see below.
 |pictoplot | contains the libary for transmitting and interface|
 |test | contains test images and gcode|
 
-###Usage
+### Usage
 ####Headless Mode
 Run as headless mode,this will perform all steps
 ['takepic','convtobmp','convtosvg','fixsvg','convtog','trans'].
@@ -45,26 +45,26 @@ or
 python pictoplot.py -m 0 
 ```
 
-####Interface Mode
+#### Interface Mode
 Use the interface this requres pygame to be installed
 ```
 python pictoplot.py -m 1
 ```
 
-####Render GCode to diplay without plotting mode
+#### Render GCode to diplay without plotting mode
 Print the test gcode this 
 ```
 python pictoplot.py -m 2
 ```
 
-####Print test image mode
+#### Print test image mode
 Print the test image this prints a grid image located under test\photo.bmp
 ```
 python pictoplot.py -m 3
 ```
 
 
-####Render GCode Mode
+#### Render GCode Mode
 This will render the GCode result to screen
 ```
 python pictoplot.py -m 4
