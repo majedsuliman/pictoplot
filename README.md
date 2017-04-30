@@ -52,7 +52,7 @@ python pictoplot.py -m 1
 ```
 
 #### Render GCode to diplay without plotting mode
-Print the test gcode this 
+Render the GCode to screen this does not send to cnc plotter and is useful for testing without waiting for plotting and wasting ink and paper.
 ```
 python pictoplot.py -m 2
 ```
@@ -64,8 +64,8 @@ python pictoplot.py -m 3
 ```
 
 
-#### Render GCode Mode
-This will render the GCode result to screen
+#### Print a test GCode Mode
+This will print a gcode and will print a box 40mmx40mm the bound of the plotter
 ```
 python pictoplot.py -m 4
 ```
