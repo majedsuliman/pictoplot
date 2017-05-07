@@ -127,7 +127,7 @@ class PicToPlot():
       print "Converting tmp/photo.pbm to tmp/photo.svg"
       #We -t200 handles the size of blobs we want to discard and it will convert to 40mmx40mm size
       #call(["potrace","--svg","-t200","-P 40mmx40mm","-W 40mm","-H40mm","--tight","tmp/photo.pbm"])
-      call(["potrace","--svg","-t200","-P 40mmx40mm","-W 40mm","--tight","tmp/photo.pbm"]) 
+      call(["potrace","--svg","-t100","-P 40mmx40mm","-W 40mm","--tight","tmp/photo.pbm"]) 
 
    
    '''
@@ -142,7 +142,8 @@ class PicToPlot():
       f =fileinput.FileInput("tmp/photo.svg", inplace=True)
       for line in f:#loop through the lines
          if line.startswith("<g transform="):#find the transform line
-            scale=0.0105000
+            scale=0.0105000#Fit Page
+	    scale=0.009500#Looks Better
             print('<g transform="translate(60.082978,20.809088) scale('+str(scale)+',-'+str(scale)+')"')#write the off set
          else:    
             print(line.replace('pt"', '"'))#remove the pt
