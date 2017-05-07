@@ -19,147 +19,183 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 import pygame
 import pictoplot.lib
-
+import platform
+if platform.system()=="Linux":
+   import RPi.GPIO as GPIO
+   import time
 
 '''
 Class to help with pygame iterface
 '''
 class Interface():
-        c=None
-        screen=None
-        p=None
+   c=None
+   screen=None
+   p=None
         
-        def __init__(self,pictoplotlib,full=False):
-                self.c = pygame.time.Clock() # create a clock object for timing
-                #Set up pygame
-                pygame.init()
-                size=(640,480)
-                #size=pygame.FULLSCREEN
-                if full:
-                        self.screen = pygame.display.set_mode(size,pygame.FULLSCREEN)
-                else:
-                        self.screen = pygame.display.set_mode(size)
-                self.p=pictoplotlib
+   def __init__(self,pictoplotlib,full=False):
+      self.c = pygame.time.Clock() # create a clock object for timing
+      #Set up pygame
+      pygame.init()
+      size=(640,480)
+      #size=pygame.FULLSCREEN
+      if full:
+            self.screen = pygame.display.set_mode(size,pygame.FULLSCREEN)
+      else:
+            self.screen = pygame.display.set_mode(size)
+      self.p=pictoplotlib
+      if platform.system()=="Linux":
+         GPIO.setmode(GPIO.BCM)
+         GPIO.setup(15,GPIO.IN,pull_up_down=GPIO.PUD_UP)#NO
+         GPIO.setup(18,GPIO.IN,pull_up_down=GPIO.PUD_UP)#YE CONTIUE
+         
                 
-        #Wait for the space bar to be pressed
-        def Continue(self):
-                events = pygame.event.get()
-                for event in events:
-                        if event.type == pygame.KEYDOWN:
-                                if event.key == pygame.K_SPACE:
-                                        return False
-                                if event.key == pygame.K_q:
-                                        pygame.quit()
-                                        quit
-                return True
-                                        
-        #Wait for the space bar to be pressed
-        def YesNo(self):
-                events = pygame.event.get()
-                for event in events:
-                        if event.type == pygame.KEYDOWN:
-                                if event.key == pygame.K_y:
-                                        return (False,True)
-                                if event.key == pygame.K_n:
-                                        return (False,False)
-                                if event.key == pygame.K_q:
-                                        pygame.quit()
-                                        quit
-                return (True,False)
+   #Wait for the space bar to be pressed
+   def Continue(self):
+      #test for gpio
+      if platform.system()=="Linux":
+         input_state=GPIO.input(18)
+         if input_state==0:
+            time.sleep(0.5)
+            print("y")
+            return False
+         
+         input_state=GPIO.input(15)
+         if input_state==0:
+            time.sleep(0.5)
+            print("n")
+            return False
+      events = pygame.event.get()
+      for event in events:
+         if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+               return False
+            if event.key == pygame.K_q:
+               pygame.quit()
+               quit
+      return True
+     
+            
+   #Wait for the space bar to be pressed
+   def YesNo(self):
+      #test for gpio
+      if platform.system()=="Linux":
+         input_state=GPIO.input(18)
+         if input_state==0:
+            time.sleep(0.5)
+            print("y")
+            return (False,True)
+         
+         input_state=GPIO.input(15)
+         if input_state==0:
+            time.sleep(0.5)
+            print("n")
+            return (False,False)
+            
+      events = pygame.event.get()
+      for event in events:
+         if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_y:
+               return (False,True)
+            if event.key == pygame.K_n:
+               return (False,False)
+            if event.key == pygame.K_q:
+               pygame.quit()
+               quit
+      return (True,False)
 
-        #Close pygame
-        def ClosePyGame(self):
-                pygame.quit()
-        
-        '''
-        Method DisplaySplashScreen()
-        This will display a splash screen and wait for spae bar to be pressed
-        '''
-        def DisplaySplashScreen(self):
-                #Load the splash screen
-                img=pygame.image.load("img/splash.bmp")#Load the splash screeen
-                w, h = pygame.display.get_surface().get_size()
-                img = pygame.transform.scale(img, (w, h))#scale the image to fit
-                loop=True
-                while loop:
-                        self.screen.blit(img,(0,0))
-                        pygame.display.flip() # update the display
-                        self.c.tick(10) # only three images per second
-                        loop=self.Continue()
-               
+   #Close pygame
+   def ClosePyGame(self):
+      pygame.quit()
 
-
-        def showPhotoPreview(self):
-                loop=True
-                while loop:
-                        self.p.TakePicture()
-                        img=pygame.image.load("tmp/photo.bmp")
-                        w, h = pygame.display.get_surface().get_size()
-                        img = pygame.transform.scale(img, (w, h))#scale the image to fit
-                        self.screen.blit(img,(0,0))
-                        pygame.display.flip() # update the display
-                        self.c.tick(10) # only three images per second
-                        loop=self.Continue()
-
-                            
-        def showPBMPreview(self):
-                loop=True
-                while loop:
-                        img=pygame.image.load("tmp/photo.pbm")
-                        img2=pygame.image.load("img/overlay.png").convert_alpha()
-                        #img2.set_alpha(128)
-                        w, h = pygame.display.get_surface().get_size()
-                        img = pygame.transform.scale(img, (w, h))#scale the image to fit
-                        img2 = pygame.transform.scale(img2, (w, h))#scale the image to fit
-                        self.screen.blit(img,(0,0))
-                        self.screen.blit(img2,(0,0))
-                        pygame.display.flip() # update the display
-                        self.c.tick(10) # only three images per second
-                        loop,s=self.YesNo()
-                return s
+   '''
+   Method DisplaySplashScreen()
+   This will display a splash screen and wait for spae bar to be pressed
+   '''
+   def DisplaySplashScreen(self):
+      #Load the splash screen
+      img=pygame.image.load("img/splash.bmp")#Load the splash screeen
+      w, h = pygame.display.get_surface().get_size()
+      img = pygame.transform.scale(img, (w, h))#scale the image to fit
+      loop=True
+      while loop:
+         self.screen.blit(img,(0,0))
+         pygame.display.flip() # update the display
+         self.c.tick(10) # only three images per second
+         loop=self.Continue()
 
 
-        def showProcessing(self):
-                loop=True
-                img=pygame.image.load("tmp/photo.pbm")
-                img2=pygame.image.load("img/processing.png").convert_alpha()
-                w, h = pygame.display.get_surface().get_size()
-                img = pygame.transform.scale(img, (w, h))#scale the image to fit
-                img2 = pygame.transform.scale(img2, (w, h))#scale the image to fit
-                self.screen.blit(img,(0,0))
-                self.screen.blit(img2,(0,0))
-                pygame.display.flip() # update the display
-   
-        def showPrinting(self):
-                loop=True
-                img=pygame.image.load("tmp/photo.pbm")
-                img2=pygame.image.load("img/printing.png").convert_alpha()
-                w, h = pygame.display.get_surface().get_size()
-                img = pygame.transform.scale(img, (w, h))#scale the image to fit
-                img2 = pygame.transform.scale(img2, (w, h))#scale the image to fit
-                self.screen.blit(img,(0,0))
-                self.screen.blit(img2,(0,0))
-                pygame.display.flip() # update the display
 
-        def Process(self):
-                #p=PicToPlot(port="COM3",board=57600,threshold=0.5)
-                #o=PicToPlotInterface(p)
-                self.DisplaySplashScreen()
-                MainLoop=True
-                while MainLoop:
-                        loop=True
-                        while loop:
-                                self.showPhotoPreview()
-                                self.p.CovertToPBM()
-                                loop=not self.showPBMPreview()
+   def showPhotoPreview(self):
+      loop=True
+      while loop:
+         self.p.TakePicture()
+         img=pygame.image.load("tmp/photo.bmp")
+         w, h = pygame.display.get_surface().get_size()
+         img = pygame.transform.scale(img, (w, h))#scale the image to fit
+         self.screen.blit(img,(0,0))
+         pygame.display.flip() # update the display
+         self.c.tick(10) # only three images per second
+         loop=self.Continue()
 
-                        self.showProcessing()
-                        self.p.ConvertToSVG()
-                        self.p.FixSvgHeader()
-                        self.p.ConvertToGCode()
-                        self.showPrinting()
-                        self.p.Transmit()
-                        self.DisplaySplashScreen()
 
-                self.ClosePyGame()
+   def showPBMPreview(self):
+      loop=True
+      while loop:
+         img=pygame.image.load("tmp/photo.pbm")
+         img2=pygame.image.load("img/overlay.png").convert_alpha()
+         #img2.set_alpha(128)
+         w, h = pygame.display.get_surface().get_size()
+         img = pygame.transform.scale(img, (w, h))#scale the image to fit
+         img2 = pygame.transform.scale(img2, (w, h))#scale the image to fit
+         self.screen.blit(img,(0,0))
+         self.screen.blit(img2,(0,0))
+         pygame.display.flip() # update the display
+         self.c.tick(10) # only three images per second
+         loop,s=self.YesNo()
+      return s
+
+
+   def showProcessing(self):
+      loop=True
+      img=pygame.image.load("tmp/photo.pbm")
+      img2=pygame.image.load("img/processing.png").convert_alpha()
+      w, h = pygame.display.get_surface().get_size()
+      img = pygame.transform.scale(img, (w, h))#scale the image to fit
+      img2 = pygame.transform.scale(img2, (w, h))#scale the image to fit
+      self.screen.blit(img,(0,0))
+      self.screen.blit(img2,(0,0))
+      pygame.display.flip() # update the display
+
+   def showPrinting(self):
+      loop=True
+      img=pygame.image.load("tmp/photo.pbm")
+      img2=pygame.image.load("img/printing.png").convert_alpha()
+      w, h = pygame.display.get_surface().get_size()
+      img = pygame.transform.scale(img, (w, h))#scale the image to fit
+      img2 = pygame.transform.scale(img2, (w, h))#scale the image to fit
+      self.screen.blit(img,(0,0))
+      self.screen.blit(img2,(0,0))
+      pygame.display.flip() # update the display
+
+   def Process(self):
+      #p=PicToPlot(port="COM3",board=57600,threshold=0.5)
+      #o=PicToPlotInterface(p)
+      self.DisplaySplashScreen()
+      MainLoop=True
+      while MainLoop:
+         loop=True
+         while loop:
+            self.showPhotoPreview()
+            self.p.CovertToPBM()
+            loop=not self.showPBMPreview()
+
+         self.showProcessing()
+         self.p.ConvertToSVG()
+         self.p.FixSvgHeader()
+         self.p.ConvertToGCode()
+         self.showPrinting()
+         self.p.Transmit()
+         self.DisplaySplashScreen()
+
+      self.ClosePyGame()
 
