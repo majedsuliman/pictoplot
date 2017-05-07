@@ -62,6 +62,9 @@ class Interface():
                                         return (False,True)
                                 if event.key == pygame.K_n:
                                         return (False,False)
+                                if event.key == pygame.K_q:
+                                        pygame.quit()
+                                        quit
                 return (True,False)
 
         #Close pygame

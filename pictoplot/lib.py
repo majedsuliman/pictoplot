@@ -27,7 +27,10 @@ import time
 from transmit import Transmitter
 if platform.system()=="Windows":
         from cv2 import *
-      
+else:
+        import picamera
+        camera=picamera.PiCamera()
+
 
 '''
 class PicToPlot()
@@ -86,6 +89,19 @@ class PicToPlot():
          if s:    # frame captured without any errors
             imwrite("tmp/photo.bmp",img) #save image
       else:
+         #camera.brightness=100
+         #camera.contrast=50
+         #camera.sharpness=100
+         #camera.ISO=0
+         #camera.exposure_compensation=0
+         camera.resolution=(640,480)
+         camera.exposure_mode='auto'
+         camera.meter_mode='average'
+         camera.capture('tmp/photo.bmp')
+
+
+
+         
          #pygame.camera.init()#Init pygame
          #cam = pygame.camera.Camera(pygame.camera.list_cameras()[0])#Select the camera
          #cam.start()#start the camera
@@ -99,8 +115,8 @@ class PicToPlot():
          #   os.remove('tmp/photo.bmp')
          #except OSError:
         #    pass
-         call(['streamer','-c','/dev/video0','-b','16','-s 800x600','-o','tmp/photo.jpeg'])
-         call(['mogrify','-format','bmp','tmp/photo.jpeg'])
+         #call(['sudo','streamer','-c','/dev/video0','-b','16','-s 800x600','-o','tmp/photo.jpeg'])
+         #call(['mogrify','-format','bmp','tmp/photo.jpeg'])
 
 
 
@@ -143,7 +159,10 @@ class PicToPlot():
       for line in f:#loop through the lines
          if line.startswith("<g transform="):#find the transform line
             scale=0.0105000#Fit Page
-	    scale=0.009500#Looks Better
+            if platform.system()=="Windows":
+               scale=0.009500#Looks Better
+            else:
+               scale=0.009500#Looks Better
             print('<g transform="translate(60.082978,20.809088) scale('+str(scale)+',-'+str(scale)+')"')#write the off set
          else:    
             print(line.replace('pt"', '"'))#remove the pt
